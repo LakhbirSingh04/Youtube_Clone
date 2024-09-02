@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <title>Youtube.com Clone</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        p {
+            font-family: Roboto, Arial;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        .thumbmail {
+            width: 100%;
+        }
+
+         .title {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+        }
+
+        .video-info-grid{
+		display:grid;
+		grid-template-columns:50px 1fr;
+		}
+        
+		.channel-photo1{
+		width:50px;
+		}
+		
+        .profile-picture {
+            width: 36px;
+            border-radius: 50px;
+        }
+
+        .thumbnail-row {
+            margin-bottom: 8px;
+			position:relative;
+        }
+		
+		.author, .stats {
+            font-size: 12px;
+            color: rgb(96, 96, 96);
+        }
+
+        .author {
+            margin-bottom: 4px;
+        }
+
+         .video-grid{
+		 display:grid;
+		 grid-template-columns:1fr 1fr 1fr;
+		 column-gap: 16px;
+		 row-gap: 40px;
+		 }
+		 
+		 @media (max-width: 750px){
+		 .video-grid{
+		 grid-template-columns: 1fr 1fr;
+		  }
+		}
+		 
+		 @media (min-width: 751px) and (max-width:999px){
+		 .video-grid{
+		 grid-template-columns: 1fr 1fr 1fr;
+		 }
+		}
+		 
+		 
+		 @media (min-width:1000px){
+		 .video-grid{
+		 grid-template-columns: 1fr 1fr 1fr 1fr
+		 }
+		} 
+		 
+		 
+		.video-time{
+		font-size:12px;
+		font-weight:500;
+		position:absolute;
+		background-color:black;
+		color:white;
+		bottom:10px;
+		right:10px;
+		padding:2px;
+		border-radius:2px;
+		}
+		
+		
+		/* header styles */
+		
+		
+		 .header{
+		 height:55px;
+		 display:flex;
+		 flex-direction:row;
+		 justify-content: space-between;
+		 
+		 position:fixed;
+		 top:0;
+		 left:0;
+		 right:0;
+		 
+		 background-color:white;    
+		 
+		 border-bottom-width:1px;       /*for border between header and videos , to differentiate*/
+		 border-bottom-style:solid;
+		 border-bottom-color: rgb(228,228,228);
+		 
+		 z-index:100;
+		 }
+		 
+		 .search-bar {
+            display: block;
+        }
+        
+		
+		  /*left section*/
+		
+		
+		.left-section{   
+		display:flex;
+		align-items:center;
+		}
+		
+		.hamburger-menu{
+		height:24px;
+		margin-left:24px;
+		margin-right:24px;
+		}
+		
+		.youtube-logo{
+		height:20px;
+		}
+		
+		
+		/*middle section*/
+		
+		
+		.middle-section{       
+		display:flex;
+		flex: 1;
+		margin-left:70px;
+		margin-right:35px;
+		max-width:650px;
+		align-items:center;
+		}
+		
+		.search-button{
+		height:40px;
+		width:66px;
+		background-color:rgb(240,240,240);
+		border: 1px solid rgb(192,192,192);
+		margin-left:-1px;
+		margin-right:10px;
+		}
+		
+		.search-button ,
+		.voice-search-button ,
+		.upload-section,
+		.explore-apps,
+		notifications-icon-div{
+		  
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		position:relative;
+		}
+		
+		.search-button .tooltip ,
+		.voice-search-button .tooltip ,
+		.upload-section .tooltip,
+		.explore-apps .tooltip,
+		.notifications-icon-div .tooltip{
+		position:absolute;
+		background-color:gray;
+		color:white;
+		padding-top:4px;
+		padding-bottom:4px;
+		padding-left:8px;
+		padding-right:8px;
+		border-radius:2px;
+		font-sizse:12px;
+		bottom:-30px;
+		opacity:0;
+		transition:opacity 0.15s;
+		pointer-events:none;
+		white-space:nowrap;
+		}
+		
+		.search-button:hover .tooltip,
+		.voice-search-button:hover .tooltip,
+		.upload-section:hover .tooltip,
+		.explore-apps:hover .tooltip ,
+		.notifications-icon-div:hover .tooltip{
+		
+		opacity:1;
+		}
+								
+		.search-bar{
+		flex:1;
+		height:36px;
+		padding-left:10px;
+		font-size:16px;
+		border-width:1px;
+		border-style:solid;
+		border-color:rgb(192,192,192);
+		border-radius:2px;
+		box-shadow: inset 1px 2px 3px rgba(0,0,0,0.05);
+		width:0;
+		}
+		
+		.search-bar::placeholder{
+		font-size:15px;
+		}
+		
+		.search-icon{
+		height:25px;
+		}
+		
+		.voice-search-button{
+		height:40px;
+		width:40px;
+		border-radius:20px;
+		border:none;
+		background-color:rgb(248,248,248);
+		}
+		
+		.voice-search-icon{
+		height:24px;
+		}
+		
+		.voice-search-button:hover{
+		cursor:pointer;
+		}
+		
+		 /*right section*/
+		 
+		.right-section{
+		width:180px;
+		margin-right:20px;
+		display:flex;
+		align-items:center;
+		justify-content:space-between;
+		flex-shrink:0;		
+		}
+		
+		.upload-icon{
+		height:24px;
+		}
+		
+		.youtube-apps{
+		height:24px;
+		}
+		
+		.notifications-icon{
+		height:24px;
+		}
+		
+		.current-user-picture{
+		height:32px;
+		border-radius:16px;
+		}
+		
+		.notifications-icon-div{
+		position:relative;
+		}
+		
+		.notification-msgs{
+		position:absolute;
+		top:-2px;
+		right:-5px;
+		background-color:rgb(200,0,0);
+		color:white;
+		font-size:11px;
+		padding-left:5px;
+		padding-right:5px;
+		padding-top:2px;
+		padding-bottom:2px;
+		border-radius: 10px;
+		}
+		
+		
+		/*sidebar styles*/
+		
+		.sidebar{
+		position:fixed;
+		left:0;
+		bottom:0;
+		top:55px;
+		background-color:white;
+		color:black;
+		 width:72px;
+		 z-index:200;
+		 padding-top:5px;
+		 }
+		
+		.sidebar-link{
+		height:74px;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		flex-direction:column;
+		cursor:pointer;
+		}
+		.sidebar-link:hover{
+		background-color:rgb(235,235,235);
+		}
+		
+		.sidebar-link img {
+		height:24px;
+		margin-bottom:4px;
+		}
+		
+		.sidebar-link div {
+		font-size: 10px;
+		}
+		
+		
+    </style>
+</head>
+
+<body style="margin:0;
+padding-top:80px;
+padding-left:99px;
+padding-right:24px;
+background-color:rgb(248,248,248);
+font-family: Roboto, Arial;">
+
+ 
+         <header class="header">  <!--header container-->
+		 
+		 <!-- Left Section-->
+		 <div class="left-section">
+		 <img class="hamburger-menu"
+		 src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\icons/hamburger-menu.svg"> 
+         
+		 <img class="youtube-logo"
+		 src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\icons/youtube-logo.svg">
+          </div>
+		  
+		  <!-- Middle Section-->
+		 <div class="middle-section">
+		 <input class="search-bar" type="textbox" placeholder="Search">
+          
+		  <button class="search-button">
+		  <img class="search-icon"
+		 src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\icons/search.svg">
+         <div class="tooltip">Search</div>
+		 
+		 </button>
+		 
+		 <button class="voice-search-button">
+		 <img class="voice-search-icon"
+		 src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\icons/voice-search-icon.svg">
+         <div class="tooltip">Search with your voice</div>
+		 
+		 </button>
+		 
+		  </div>
+		  
+		  <!-- Right Section-->
+		 <div class="right-section">
+		  
+		  <div class="upload-section">
+		 <img class="upload-icon"
+		 src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\icons/upload.svg"> 
+         <div class="tooltip"> Create</div>
+		 
+		 </div>
+		 
+		 <div class="explore-apps">
+		 <img class="youtube-apps"
+		 src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\icons/youtube-apps.svg">
+		 <div class="tooltip"> Explore youtube apps</div>
+		 
+		 </div>
+		 
+		 <div class="notifications-icon-div">
+		
+		 <img class="notifications-icon"
+		 src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\icons/notifications.svg"> 
+         
+		 <div class="notification-msgs"> 6 </div>
+		 <div class="tooltip"> Notifications</div>
+		 </div>
+		 
+		 <img class="current-user-picture"
+		 src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone/my-channel.jpg">
+           	  
+		 </div>
+		 
+		 </header>
+         
+		  <!--sidebar container-->
+        <nav class="sidebar">  
+		
+		 <div class="sidebar-link"> 
+         <img src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\icons/home.svg"> 
+         <div>Home </div>
+		 </div>
+				   
+		 <div class="sidebar-link">
+          <img src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\icons/explore.svg"> 
+         <div>Explore </div>
+		</div>
+				   
+		 <div class="sidebar-link">
+          <img src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\icons/subscriptions.svg"> 
+          <div>Subscriptions </div>
+		  </div>
+		 
+		 <div class="sidebar-link"> 
+		  <img src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\icons/originals.svg"> 
+          <div>Originals </div>
+		  </div>
+		 
+		 <div class="sidebar-link">
+          <img src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\icons/youtube-music.svg"> 
+          <div>Youtube-music </div>
+		  </div>
+		 
+		 <div class="sidebar-link">
+         <img src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\icons/library.svg"> 
+         <div>Library </div>
+		 </div>
+		   </nav>
+		
+     
+	 <main>
+	 <section class="video-grid">   <!-- videos container-->
+
+
+     <div class="video-preview"> <!-- Video 1-->
+	 
+         <div class="thumbnail-row">
+            <img class="thumbmail" src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\Thumbnails/Thumbnail-1.jpg"> 
+          
+         <div class="video-time"> 15:00 </div>		  
+
+		 </div>
+
+        <div  class="video-info-grid">
+            <div class="channel-photo1">
+                <img class="profile-picture" src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\Channel-pics/Channel-photo1.jpg">
+            </div>
+
+            <div class="video-info">
+                <p class="title">Blooming flowers video</p>
+                <p class="author">Flower videos</p>
+                <p class="stats">3.6M views &middot; 6 months ago</p> 
+            </div>
+        </div>
+    </div>
+
+    <div class="video-preview"> <!-- Video 2-->
+        <div class="thumbnail-row">
+            <img class="thumbmail" src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\Thumbnails/Thumbnail-2.jpg"> 
+        
+		<div class="video-time"> 28:37 </div>	
+		
+		</div>
+
+        <div class="video-info-grid">
+            <div class="channel-photo">
+                <img class="profile-picture" src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\Channel-pics/Channel-photo2.jpg">
+            </div>
+
+            <div class="video-info">
+                <p class="title">Oggy and the cockroaches full episode</p>
+                <p class="author">Oggy and the cockroaches</p>
+                <p class="stats">29M views &middot; 4 years ago</p> 
+            </div>
+        </div>
+    </div>
+	
+	
+	 <div class="video-preview"> <!-- Video 3-->
+        <div class="thumbnail-row">
+            <img class="thumbmail" src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\Thumbnails/Thumbnail-3.jpg"> 
+        
+		<div class="video-time"> 13:41 </div>	
+		
+		</div>
+
+        <div  class="video-info-grid">
+            <div class="channel-photo">
+                <img class="profile-picture" src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\Channel-pics/Channel-photo3.jpg">
+            </div>
+
+            <div class="video-info">
+                <p class="title">Tom and Jerry New Episode</p>
+                <p class="author">Tom and Jerry</p>
+                <p class="stats">69M views &middot; 1 week ago</p> 
+            </div>
+        </div>
+    </div>
+
+
+    <div class="video-preview"> <!-- Video 4-->
+        <div class="thumbnail-row">
+            <img class="thumbmail" src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\Thumbnails/Thumbnail-4.jpg"> 
+        
+		<div class="video-time"> 11:12 </div>	
+		
+		</div>
+
+        <div class="video-info-grid">
+            <div class="channel-photo">
+                <img class="profile-picture" src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\Channel-pics/Channel-photo4.jpg">
+            </div>
+
+            <div class="video-info">
+                <p class="title">Mr Beast 1M dollar challenge</p>
+                <p class="author">Mr Beast</p>
+                <p class="stats">1k views &middot; 2 weeks ago</p> 
+            </div>
+        </div>
+    </div>
+	
+	
+	 <div class="video-preview"> <!-- Video 5-->
+        <div class="thumbnail-row">
+            <img class="thumbmail" src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\Thumbnails/Thumbnail-5.jpg"> 
+        
+		<div class="video-time"> 5:00 </div>	
+		
+		</div>
+
+        <div  class="video-info-grid">
+            <div class="channel-photo">
+                <img class="profile-picture" src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\Channel-pics/Channel-photo5.jpg">
+            </div>
+
+            <div class="video-info">
+                <p class="title">Learn How to fly a plane in 5 minutes</p>
+                <p class="author">Life Hacks</p>
+                <p class="stats">507M views &middot; 10 years ago</p> 
+            </div>
+        </div>
+    </div>
+
+
+    <div class="video-preview"> <!-- Video 6-->
+        <div class="thumbnail-row">
+            <img class="thumbmail" src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\Thumbnails/Thumbnail-6.jpg"> 
+        
+		<div class="video-time"> 6:00 </div>	
+		
+		</div>
+
+        <div class="video-info-grid">
+            <div class="channel-photo">
+                <img class="profile-picture" src="C:\Users\Lucky\OneDrive\Desktop\Html\Youtube_Clone\Channel-pics/Channel-photo6.jpg">
+            </div>
+
+            <div class="video-info">
+                <p class="title">1 Super chicken VS 10,000 Humans</p>
+                <p class="author">Super Chicken</p>
+                <p class="stats">3.4B views &middot; 15 years ago</p> 
+              </div>
+           </div>
+        </div>
+    </section>
+</main>
+  
+</body>
+</html>
